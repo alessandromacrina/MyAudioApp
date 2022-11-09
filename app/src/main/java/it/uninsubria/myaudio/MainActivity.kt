@@ -18,5 +18,16 @@ class MainActivity : AppCompatActivity() {
             AppDatabase::class.java,
             "audioRecords"
         ).build()
+
+        for(i in 1..3){
+            var j = 1;
+            var a= AudioRecord("filaname" + j, "filePath" +j, 11 , "11.22", "amspath"+j)
+            db.audioRecordDao().insert()
+            j++;
+        }
+
+
     }
+
+
 }

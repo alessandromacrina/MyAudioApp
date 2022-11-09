@@ -21,6 +21,6 @@ interface AudioRecordDao {
     fun delete(audioRecord: Array<AudioRecord>)
 
     @Update //riconosce l'id e aggiorna la giusta colonna nel db
-    fun updata(audioRecord: AudioRecord)
+    fun update(audioRecord: AudioRecord)
 
 }

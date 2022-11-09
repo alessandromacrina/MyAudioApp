@@ -19,6 +19,7 @@ class AudioRecyclerAdapter(var records : List<AudioRecord>) : RecyclerView.Adapt
         var tvItem2 : TextView = itemView.findViewById(R.id.tv_tvItem2)
         var checkbox : CheckBox = itemView.findViewById(R.id.checkbox)
 
+
     }
 
     //ritorna un oggetto viewholder e gli passa un oggetto view

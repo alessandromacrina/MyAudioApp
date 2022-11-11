@@ -18,6 +18,11 @@ class ArchivioActivity : AppCompatActivity() {
         records = ArrayList()
         myAdapter = AudioRecyclerAdapter(records)
 
+        db= Room.databaseBuilder(
+            this,
+            AppDatabase::class.java,
+            "audioRecords"
+        ).build()
 
         rv_archivio.apply {
             adapter = myAdapter

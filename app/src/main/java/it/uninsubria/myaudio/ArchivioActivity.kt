@@ -65,6 +65,6 @@ class ArchivioActivity : AppCompatActivity() , OnItemClickListener {
     }
 
     override fun onLongClickListener(position: Int) {
-        TODO("Not yet implemented")
+        Toast.makeText(this, "Tocco prolungato" , Toast.LENGTH_SHORT).show()
     }
 }

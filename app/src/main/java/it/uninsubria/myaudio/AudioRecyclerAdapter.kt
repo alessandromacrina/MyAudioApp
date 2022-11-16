@@ -5,6 +5,7 @@ import android.database.DataSetObserver
 import android.icu.text.AlphabeticIndex
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.Adapter
 import android.widget.CheckBox
@@ -13,12 +14,25 @@ import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AudioRecyclerAdapter(var records : ArrayList<AudioRecord>) : RecyclerView.Adapter<AudioRecyclerAdapter.ViewHolder>(){
+class AudioRecyclerAdapter(var records : ArrayList<AudioRecord>, var listener: OnItemClickListener) : RecyclerView.Adapter<AudioRecyclerAdapter.ViewHolder>(){
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) , View.OnClickListener , View.OnLongClickListener{
         var tvItem : TextView = itemView.findViewById(R.id.tv_tvItem)
         var tvItem2 : TextView = itemView.findViewById(R.id.tv_tvItem2)
         var checkbox : CheckBox = itemView.findViewById(R.id.checkbox)
+        override fun onClick(p0: View?) {
+            val position = adapterPosition
+            if(position != RecyclerView.NO_POSITION)
+                listener.onClickListener(position)
+
+        }
+
+        override fun onLongClick(p0: View?): Boolean {
+            val position = adapterPosition
+            if(position != RecyclerView.NO_POSITION)
+                listener.onClickListener(position)
+            return true
+        }
 
 
     }

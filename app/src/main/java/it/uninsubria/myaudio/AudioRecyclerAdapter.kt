@@ -1,5 +1,6 @@
 package it.uninsubria.myaudio
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.database.DataSetObserver
 import android.icu.text.AlphabeticIndex
@@ -30,14 +31,15 @@ class AudioRecyclerAdapter(var records : ArrayList<AudioRecord>) : RecyclerView.
         return ViewHolder(view)
     }
 
+    @SuppressLint("SimpleDateFormat")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if(position !=RecyclerView.NO_POSITION){ //quando cerchiamo di inserire mentre sta ancora caricando
-            var record : AudioRecord = records[position]
-            var sdf = SimpleDateFormat("dd/MM/yyyy")
-            var date = Date(record.timestamp)
+            val record : AudioRecord = records[position]
+            val sdf = SimpleDateFormat("dd/MM/yyyy")
+            val date = Date(record.timestamp)
             var strDate = sdf.format(date)
 
-            holder.tvItem.text = record.filaname
+            holder.tvItem.text = record.filename
             holder.tvItem2.text = record.duration
 
         }

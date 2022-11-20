@@ -18,20 +18,14 @@ class ArchivioActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_archivio)
         db = DBHelper(this)
-
+        var audioRecords : ArrayList<AudioRecord> = ArrayList()
         var cursor: Cursor
-        db.readData().also { cursor = it }
+        audioRecords = db.readData()
+        if(audioRecords.size == 0)
+            Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show()
 
-        if(cursor.count==0)
-            Toast.makeText(this, "NO ELEMENTS", Toast.LENGTH_SHORT).show()
         else {
-            var buf: StringBuffer = StringBuffer()
-            while(cursor.moveToNext())
-            {
-                buf.append("filepath :" + cursor.getString(0)+ "\n")
 
-
-            }
 
         }
     }

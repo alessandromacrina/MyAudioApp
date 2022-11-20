@@ -2,6 +2,7 @@ package it.uninsubria.myaudio
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
@@ -15,8 +16,6 @@ var duration ="Duration"
 var amspath = "Amspath"
 
 class DBHelper (var context : Context) : SQLiteOpenHelper(context , DB_NAME , null , DB_VERSION) {
-
-
 
     override fun onCreate(db: SQLiteDatabase?) {
         val createTable = "CREATE TABLE" + TABLE_NAME + " ("+
@@ -35,7 +34,7 @@ class DBHelper (var context : Context) : SQLiteOpenHelper(context , DB_NAME , nu
     }
 
     fun insertData(fn:String , fp:String , ts:Long,
-                    dur:String , aP:String){
+                    dur:String , aP:String): Boolean{
         val db=this.readableDatabase
         var cv = ContentValues()
         cv.put(filename , fn)
@@ -43,6 +42,24 @@ class DBHelper (var context : Context) : SQLiteOpenHelper(context , DB_NAME , nu
         cv.put(timestamp , ts)
         cv.put(duration, dur)
         cv.put(amspath , aP)
-        db.insert(TABLE_NAME , null , cv)
+        var result = db.insert(TABLE_NAME , null , cv)
+        if(result<0)
+            return false
+        return true
+
+    }
+
+    fun readData():Cursor{
+        val list: ArrayList<String> = ArrayList()
+        val db=this.readableDatabase
+        val query ="Select * from $TABLE_NAME"
+        val cursor= db.rawQuery(query , null)
+        val fn = cursor.getColumnIndex(filename)
+        val fp = cursor.getColumnIndex(filePath)
+        val ts = cursor.getColumnIndex(timestamp)
+        val dur = cursor.getColumnIndex(duration)
+        val ap = cursor.getColumnIndex(amspath)
+
+        return cursor
     }
 }

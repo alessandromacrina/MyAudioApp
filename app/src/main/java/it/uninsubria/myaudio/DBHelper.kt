@@ -49,19 +49,23 @@ class DBHelper (var context : Context) : SQLiteOpenHelper(context , DB_NAME , nu
 
     }
 
-    fun readData():Cursor{
-        val list: ArrayList<String> = ArrayList()
+    fun readData(): ArrayList<AudioRecord>{
+        var list = ArrayList<AudioRecord>()
         val db=this.readableDatabase
         val query ="Select * from $TABLE_NAME"
         val cursor= db.rawQuery(query , null)
-        val fn = cursor.getColumnIndex(filename)
         val fp = cursor.getColumnIndex(filePath)
+        val fn = cursor.getColumnIndex(filename)
         val ts = cursor.getColumnIndex(timestamp)
         val dur = cursor.getColumnIndex(duration)
         val ap = cursor.getColumnIndex(amspath)
 
-
-        return cursor
+        do{
+            val audiorecord = AudioRecord(cursor.getString(fp),cursor.getString(fn),
+                    cursor.getLong(ts) , cursor.getString(dur), cursor.getString(ap))
+            list.add(audiorecord)
+        }while(cursor.moveToNext())
+        return list
     }
 
     fun deleteData(path:String):Int{

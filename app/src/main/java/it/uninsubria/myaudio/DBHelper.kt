@@ -63,4 +63,9 @@ class DBHelper (var context : Context) : SQLiteOpenHelper(context , DB_NAME , nu
 
         return cursor
     }
+
+    fun deleteData(path:String):Int{
+        val db = this.readableDatabase
+        return db.delete(TABLE_NAME, filePath +" = "+ path , null)
+    }
 }

@@ -60,6 +60,7 @@ class DBHelper (var context : Context) : SQLiteOpenHelper(context , DB_NAME , nu
         val dur = cursor.getColumnIndex(duration)
         val ap = cursor.getColumnIndex(amspath)
 
+
         return cursor
     }
 }

@@ -29,6 +29,7 @@ class DBHelper (var context : Context) : SQLiteOpenHelper(context , DB_NAME , nu
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {
-
+        db?.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        onCreate(db)
     }
 }

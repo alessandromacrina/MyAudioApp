@@ -1,11 +1,14 @@
 package it.uninsubria.myaudio
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.media.MediaRecorder
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import kotlinx.android.synthetic.main.activity_main.*
@@ -15,7 +18,7 @@ import java.util.*
 
 const val REQUEST_CODE = 200
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
     private var permissions = arrayOf(Manifest.permission.RECORD_AUDIO)
     private var permissionGranted = false
 
@@ -24,6 +27,8 @@ class MainActivity : AppCompatActivity() {
     private var fileName = ""
     private var isRecording = false
     private var isPaused = false
+
+    private lateinit var timer: Timer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +39,8 @@ class MainActivity : AppCompatActivity() {
         //se non ho i permessi li chiedo
         if(!permissionGranted)
             ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE)
+
+        timer = Timer(this)
 
         btn_record.setOnClickListener{
             when{
@@ -60,12 +67,15 @@ class MainActivity : AppCompatActivity() {
         recorder.pause()
         isPaused = true
         btn_record.setImageResource(R.drawable.ic_record)
+
+        timer.pause()
     }
 
     private fun resumeRecorder(){
         recorder.pause()
         isPaused = false
         btn_record.setImageResource(R.drawable.ic_pause)
+        timer.start()
     }
 
     //metodo per registrare
@@ -95,8 +105,19 @@ class MainActivity : AppCompatActivity() {
             start()
         }
 
+
         btn_record.setImageResource(R.drawable.ic_pause)
         isRecording = true
         isPaused = false
+
+        timer.start()
+    }
+
+    private fun stopRecorder(){
+        timer.stop()
+    }
+
+    override fun onTimerTick(duration: String) {
+        tv_timer.text = duration
     }
 }

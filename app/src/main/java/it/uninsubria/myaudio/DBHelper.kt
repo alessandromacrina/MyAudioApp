@@ -1,5 +1,6 @@
 package it.uninsubria.myaudio
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
@@ -31,5 +32,17 @@ class DBHelper (var context : Context) : SQLiteOpenHelper(context , DB_NAME , nu
     override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {
         db?.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db)
+    }
+
+    fun insertData(fn:String , fp:String , ts:Long,
+                    dur:String , aP:String){
+        val db=this.readableDatabase
+        var cv = ContentValues()
+        cv.put(filename , fn)
+        cv.put(filePath , fp)
+        cv.put(timestamp , ts)
+        cv.put(duration, dur)
+        cv.put(amspath , aP)
+        db.insert(TABLE_NAME , null , cv)
     }
 }

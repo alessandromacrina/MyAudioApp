@@ -2,19 +2,16 @@ package it.uninsubria.myaudio
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.database.DataSetObserver
-import android.icu.text.AlphabeticIndex
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AudioRecyclerAdapter(var records : ArrayList<AudioRecord>) : RecyclerView.Adapter<AudioRecyclerAdapter.ViewHolder>(){
+class AudioRecyclerAdapter(var records: ArrayList<AudioRecord>, var listener : OnItemClickListenerInterface) : RecyclerView.Adapter<AudioRecyclerAdapter.ViewHolder>(){
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) , View.OnClickListener , View.OnLongClickListener{
         var tvItem : TextView = itemView.findViewById(R.id.tv_tvItem)
@@ -27,11 +24,16 @@ class AudioRecyclerAdapter(var records : ArrayList<AudioRecord>) : RecyclerView.
         }
 
         override fun onClick(p0: View?) {
-            TODO("Not yet implemented")
+            val position = adapterPosition
+            if(position != RecyclerView.NO_POSITION)
+                listener.onItemClickLister(position)
         }
 
         override fun onLongClick(p0: View?): Boolean {
-            TODO("Not yet implemented")
+            val position = adapterPosition
+            if(position!= RecyclerView.NO_POSITION)
+                listener.onItemLongClickListener(position)
+            return true
         }
 
 

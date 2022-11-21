@@ -16,10 +16,23 @@ import java.util.*
 
 class AudioRecyclerAdapter(var records : ArrayList<AudioRecord>) : RecyclerView.Adapter<AudioRecyclerAdapter.ViewHolder>(){
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) , View.OnClickListener , View.OnLongClickListener{
         var tvItem : TextView = itemView.findViewById(R.id.tv_tvItem)
         var tvItem2 : TextView = itemView.findViewById(R.id.tv_tvItem2)
         var checkbox : CheckBox = itemView.findViewById(R.id.checkbox)
+
+        init{
+            itemView.setOnClickListener(this)
+            itemView.setOnLongClickListener(this)
+        }
+
+        override fun onClick(p0: View?) {
+            TODO("Not yet implemented")
+        }
+
+        override fun onLongClick(p0: View?): Boolean {
+            TODO("Not yet implemented")
+        }
 
 
     }

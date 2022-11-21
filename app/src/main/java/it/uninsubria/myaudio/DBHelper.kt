@@ -1,5 +1,6 @@
 package it.uninsubria.myaudio
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -29,7 +30,7 @@ class DBHelper (var context : Context) : SQLiteOpenHelper(context , DB_NAME , nu
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {
-        db?.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        db?.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME)
         onCreate(db)
     }
 
@@ -49,6 +50,7 @@ class DBHelper (var context : Context) : SQLiteOpenHelper(context , DB_NAME , nu
 
     }
 
+    @SuppressLint("Recycle")
     fun readData(): ArrayList<AudioRecord>{
         var list = ArrayList<AudioRecord>()
         val db=this.readableDatabase

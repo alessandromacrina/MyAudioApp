@@ -9,9 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.view.View
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -49,6 +52,24 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
                 else -> startRecording()
             }
         }
+
+        btn_list.setOnClickListener {
+            //lista
+            Toast.makeText(this, "List button", Toast.LENGTH_LONG).show()
+        }
+
+        btn_done.setOnClickListener {
+            stopRecorder()
+            Toast.makeText(this, "Record saved", Toast.LENGTH_LONG).show()
+        }
+
+        btn_delete.setOnClickListener {
+            stopRecorder()
+            File("$dirPath$fileName.mp3")
+            Toast.makeText(this, "Record deleted", Toast.LENGTH_LONG).show()
+        }
+
+        btn_delete.isClickable = false
     }
 
     //metodo per chiedere il permesso, se viene dato modifico permissionGranted a true
@@ -111,10 +132,34 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
         isPaused = false
 
         timer.start()
+
+        btn_delete.isClickable = true
+        btn_delete.setImageResource(R.drawable.ic_delete)
+
+        btn_list.visibility = View.GONE
+        btn_done.visibility = View.VISIBLE
     }
 
     private fun stopRecorder(){
         timer.stop()
+
+        recorder.apply {
+            stop()
+            release()
+        }
+
+        isPaused = false
+        isRecording = false
+
+        //modifico i bottoni e la text view
+
+        btn_list.visibility = View.VISIBLE
+        btn_done.visibility = View.GONE
+
+        btn_delete.isClickable = false
+        btn_delete.setImageResource(R.drawable.ic_delete_disabled)
+        btn_record.setImageResource(R.drawable.ic_record)
+        tv_timer.text = "00:00.00"
     }
 
     override fun onTimerTick(duration: String) {

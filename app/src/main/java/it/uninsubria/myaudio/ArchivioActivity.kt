@@ -1,6 +1,7 @@
 package it.uninsubria.myaudio
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -48,7 +49,11 @@ class ArchivioActivity : AppCompatActivity() , OnItemClickListenerInterface {
     }
 
     override fun onItemClickLister(position: Int) {
-        Toast.makeText(this, "click normale", Toast.LENGTH_SHORT).show()
+        var audioRecord = records[position]
+        var intent = Intent(this , PlayerActivity::class.java )
+        intent.putExtra("filepath" , audioRecord.filePath)
+        intent.putExtra("filename" , audioRecord.filename)
+        startActivity(intent)
     }
 
     override fun onItemLongClickListener(position: Int) {

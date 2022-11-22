@@ -4,16 +4,17 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.media.MediaRecorder
-import android.os.Build
+import android.os.*
 import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.os.VibrationEffect
-import android.os.Vibrator
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.bottom_sheet.*
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
     private var isPaused = false
 
     private lateinit var timer: Timer
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +44,11 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
         //se non ho i permessi li chiedo
         if(!permissionGranted)
             ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE)
+
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+        //altezza quando la bottom sheet è collapsed
+        bottomSheetBehavior.peekHeight = 0
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
 
         timer = Timer(this)
 
@@ -61,6 +68,24 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
         btn_done.setOnClickListener {
             stopRecorder()
             Toast.makeText(this, "Record saved", Toast.LENGTH_LONG).show()
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            bottomSheetBackgroud.visibility = View.VISIBLE
+            filenameInput.setText(fileName)
+        }
+
+        btn_cancel.setOnClickListener {
+            File("$dirPath$fileName.mp3").delete()
+            dismiss()
+        }
+
+        btn_ok.setOnClickListener{
+            dismiss()
+            save()
+        }
+
+        bottomSheetBackgroud.setOnClickListener{
+            File("$dirPath$fileName.mp3").delete()
+            dismiss()
         }
 
         btn_delete.setOnClickListener {
@@ -70,6 +95,32 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
         }
 
         btn_delete.isClickable = false
+    }
+
+    //metodo per salvare la registrazione, se l'utente cambia il nome del file viene salvato con il nuovo nome
+    private fun save(){
+        val newFilename = filenameInput.text.toString()
+        if(newFilename != fileName){
+            var newFile = File("$dirPath$newFilename.mp3")
+            File("$dirPath$fileName.mp3").renameTo(newFile)
+        }
+    }
+
+    //metodo per nascondere la bottomsheet
+    private fun dismiss(){
+        bottomSheetBackgroud.visibility = View.GONE
+        //bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        hideKeyboard(filenameInput)
+        //ritardo l'operazione perchè fatta subito dopo spesso viene saltata
+        Handler(Looper.getMainLooper()).postDelayed({
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        }, 100)
+    }
+
+    //metodo per nascondere la tastiera
+    private fun hideKeyboard(view: View){
+        val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     //metodo per chiedere il permesso, se viene dato modifico permissionGranted a true

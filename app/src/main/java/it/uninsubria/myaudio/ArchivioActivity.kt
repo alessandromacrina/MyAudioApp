@@ -48,11 +48,11 @@ class ArchivioActivity : AppCompatActivity() , OnItemClickListenerInterface {
     }
 
     override fun onItemClickLister(position: Int) {
-        TODO("Not yet implemented")
+        Toast.makeText(this, "click normale", Toast.LENGTH_SHORT).show()
     }
 
     override fun onItemLongClickListener(position: Int) {
-        TODO("Not yet implemented")
+        Toast.makeText(this, "click prolungato", Toast.LENGTH_SHORT).show()
     }
 
 }

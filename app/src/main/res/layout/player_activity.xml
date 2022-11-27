@@ -6,32 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".PlayerActivity">
 
-    
     <SeekBar
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="20dp"
         android:progress="40"
+        android:progressTint="@color/blu_turchese"
         android:thumbTint="@color/blu_turchese"
-        android:progressTint="@color/blu_turchese"/>
+        tools:layout_editor_absoluteX="-28dp"
+        tools:layout_editor_absoluteY="-5dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="96dp"
+        android:layout_height="96dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="16dp">
+        tools:layout_editor_absoluteX="50dp">
 
         <ImageButton
             android:id="@+id/btn_play"
             android:layout_width="66dp"
             android:layout_height="66dp"
-            android:background="@drawable/ic_play"
+            android:background="@drawable/ic_round_play_circle_filled_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="-16dp"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteY="16dp" />
         >
 
     </androidx.constraintlayout.widget.ConstraintLayout>

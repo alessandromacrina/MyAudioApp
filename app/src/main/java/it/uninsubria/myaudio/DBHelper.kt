@@ -50,7 +50,6 @@ class DBHelper (var context : Context) : SQLiteOpenHelper(context , DB_NAME , nu
 
     }
 
-    @SuppressLint("Recycle")
     fun readData(): ArrayList<AudioRecord>{
         var list = ArrayList<AudioRecord>()
         val db=this.readableDatabase

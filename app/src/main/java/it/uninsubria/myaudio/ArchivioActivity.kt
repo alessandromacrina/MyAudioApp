@@ -1,70 +1,63 @@
 package it.uninsubria.myaudio
 
-import android.icu.text.Transliterator.Position
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.room.Room
 import kotlinx.android.synthetic.main.activity_archivio.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.text.FieldPosition
 
-class ArchivioActivity : AppCompatActivity() , OnItemClickListener {
+class ArchivioActivity : AppCompatActivity() , OnItemClickListenerInterface {
     private lateinit var records : ArrayList<AudioRecord>
     private lateinit var myAdapter : AudioRecyclerAdapter
-    private lateinit var db : AppDatabase
+    //private lateinit var db : AppDatabase
+    private lateinit var db : DBHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_archivio)
+        db = DBHelper(this)
+        //var cursor: Cursor
+        val audioRecords: ArrayList<AudioRecord> = db.readData()
+        if(audioRecords.size == 0)
+            Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show()
 
-        records = ArrayList()
-        myAdapter = AudioRecyclerAdapter(records , this)
+        myAdapter = AudioRecyclerAdapter(audioRecords , this)
 
-        //inizializzazione database
-        db = Room.databaseBuilder(
-            this,
-            AppDatabase :: class.java,
-            "audioRecords"
-        ).build()
-
-        db= Room.databaseBuilder(
-            this,
-            AppDatabase::class.java,
-            "audioRecords"
-        ).build()
-
-        //alla recycleview servono due informazioni: l'adapter e il layout manager
-        //che dice come posizionare e riciclare le view
 
         rv_archivio.apply {
             adapter = myAdapter
             layoutManager = LinearLayoutManager(context)
         }
+
         fetchAll()
     }
 
 
-
-    //va a prendere tutti i dati
+    @SuppressLint("NotifyDataSetChanged")
     private fun fetchAll(){
         GlobalScope.launch {
             records.clear()
-            val queryResult = db.audioRecordDao().getAll()
+            var queryResult = db.readData()
             records.addAll(queryResult)
 
             myAdapter.notifyDataSetChanged()
         }
-
     }
 
-    override fun onClickListener(position: Int) {
-        Toast.makeText(this, "Tocco semplice", Toast.LENGTH_SHORT).show()
+    override fun onItemClickLister(position: Int) {
+        var audioRecord = records[position]
+        var intent = Intent(this , PlayerActivity::class.java )
+        intent.putExtra("filepath" , audioRecord.filePath)
+        intent.putExtra("filename" , audioRecord.filename)
+        startActivity(intent)
     }
 
-    override fun onLongClickListener(position: Int) {
-        Toast.makeText(this, "Tocco prolungato" , Toast.LENGTH_SHORT).show()
+    override fun onItemLongClickListener(position: Int) {
+        Toast.makeText(this, "click prolungato", Toast.LENGTH_SHORT).show()
     }
+
 }

@@ -13,14 +13,12 @@ import kotlinx.coroutines.launch
 class ArchivioActivity : AppCompatActivity() , OnItemClickListenerInterface {
     private lateinit var records : ArrayList<AudioRecord>
     private lateinit var myAdapter : AudioRecyclerAdapter
-    //private lateinit var db : AppDatabase
     private lateinit var db : DBHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_archivio)
         db = DBHelper(this)
-        //var cursor: Cursor
         val audioRecords: ArrayList<AudioRecord> = db.readData()
         if(audioRecords.size == 0)
             Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show()
@@ -36,14 +34,11 @@ class ArchivioActivity : AppCompatActivity() , OnItemClickListenerInterface {
         fetchAll()
     }
 
-
-    @SuppressLint("NotifyDataSetChanged")
     private fun fetchAll(){
         GlobalScope.launch {
             records.clear()
             var queryResult = db.readData()
             records.addAll(queryResult)
-
             myAdapter.notifyDataSetChanged()
         }
     }

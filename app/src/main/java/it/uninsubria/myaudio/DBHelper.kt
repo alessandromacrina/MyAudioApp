@@ -34,8 +34,7 @@ class DBHelper (var context : Context) : SQLiteOpenHelper(context , DB_NAME , nu
         onCreate(db)
     }
 
-    fun insertData(fn:String , fp:String , ts:Long,
-                    dur:String , aP:String): Boolean{
+    fun insertData(fn:String , fp:String , ts:Long, dur:String , aP:String): Boolean{
         val db=this.readableDatabase
         var cv = ContentValues()
         cv.put(filename , fn)
@@ -73,4 +72,5 @@ class DBHelper (var context : Context) : SQLiteOpenHelper(context , DB_NAME , nu
         val db = this.readableDatabase
         return db.delete(TABLE_NAME, filePath +" = "+ path , null)
     }
+
 }

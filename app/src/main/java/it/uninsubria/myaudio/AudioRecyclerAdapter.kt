@@ -46,7 +46,6 @@ class AudioRecyclerAdapter(var records: ArrayList<AudioRecord>, var listener : O
         return ViewHolder(view)
     }
 
-    @SuppressLint("SimpleDateFormat")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if(position !=RecyclerView.NO_POSITION){ //quando cerchiamo di inserire mentre sta ancora caricando
             val record : AudioRecord = records[position]

@@ -19,12 +19,12 @@ var amspath = "Amspath"
 class DBHelper (var context : Context) : SQLiteOpenHelper(context , DB_NAME , null , DB_VERSION) {
 
     override fun onCreate(db: SQLiteDatabase?) {
-        val createTable = "CREATE TABLE" + TABLE_NAME + " ("+
-                        filename + "VARCHAR(128)," +
-                filePath + "VARCHAR(512)" +
-                timestamp + "BIGINT" +
-                duration + "VARCHAR(15)" +
-                amspath + "VARCHAR(512)" +
+        val createTable = "CREATE TABLE " + TABLE_NAME + " ("+
+                        filename + " " + "VARCHAR(128)," +
+                filePath + " " + "VARCHAR(512)," +
+                timestamp + " " + "BIGINT," +
+                duration + " " + "VARCHAR(15)," +
+                amspath + " " + "VARCHAR(512)" +
                 ")"
         db?.execSQL(createTable)
     }
@@ -61,6 +61,7 @@ class DBHelper (var context : Context) : SQLiteOpenHelper(context , DB_NAME , nu
         val ap = cursor.getColumnIndex(amspath)
 
         do{
+            //problema con il cursore index -1
             val audiorecord = AudioRecord(cursor.getString(fp),cursor.getString(fn),
                     cursor.getLong(ts) , cursor.getString(dur), cursor.getString(ap))
             list.add(audiorecord)

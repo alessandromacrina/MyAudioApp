@@ -2,6 +2,7 @@ package it.uninsubria.myaudio
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.MediaRecorder
 import android.os.*
@@ -62,6 +63,7 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
 
         btn_list.setOnClickListener {
             //lista
+            startActivity(Intent(this, ArchivioActivity::class.java))
             Toast.makeText(this, "List button", Toast.LENGTH_LONG).show()
         }
 

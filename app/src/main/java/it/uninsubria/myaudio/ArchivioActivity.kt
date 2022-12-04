@@ -19,18 +19,16 @@ class ArchivioActivity : AppCompatActivity() , OnItemClickListenerInterface {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_archivio)
         db = DBHelper(this)
-        val audioRecords: ArrayList<AudioRecord> = db.readData()
-        if(audioRecords.size == 0)
+        records = db.readData()
+        if(records.size <= 0)
             Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show()
 
-        myAdapter = AudioRecyclerAdapter(audioRecords , this)
-
+        myAdapter = AudioRecyclerAdapter(records , this)
 
         rv_archivio.apply {
             adapter = myAdapter
             layoutManager = LinearLayoutManager(context)
         }
-
         fetchAll()
     }
 

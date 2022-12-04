@@ -63,7 +63,8 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
 
         btn_list.setOnClickListener {
             //lista
-            startActivity(Intent(this, ArchivioActivity::class.java))
+            val intentopen = Intent(this , ArchivioActivity::class.java)
+            startActivity(intentopen)
             Toast.makeText(this, "List button", Toast.LENGTH_LONG).show()
         }
 

@@ -51,7 +51,7 @@ class AudioRecyclerAdapter(var records: ArrayList<AudioRecord>, var listener : O
             val record : AudioRecord = records[position]
             val sdf = SimpleDateFormat("dd/MM/yyyy")
             val date = Date(record.timestamp)
-            var strDate = sdf.format(date)
+            var strDate : String = sdf.format(date)
 
             holder.tvItem.text = record.filename
             holder.tvItem2.text = record.duration

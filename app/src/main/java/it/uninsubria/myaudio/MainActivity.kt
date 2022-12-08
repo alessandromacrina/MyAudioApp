@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
     private var fileName = ""
     private var isRecording = false
     private var isPaused = false
+    private lateinit var db : DBHelper
 
     private lateinit var timer: Timer
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
@@ -39,6 +40,9 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //inizializzo il db
+        db = DBHelper(this)
 
         //verifico se il permesso è stato dato
         permissionGranted = ActivityCompat.checkSelfPermission(this, permissions[0]) == PackageManager.PERMISSION_GRANTED
@@ -107,6 +111,9 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
             var newFile = File("$dirPath$newFilename.mp3")
             File("$dirPath$fileName.mp3").renameTo(newFile)
         }
+        //uso la funzione di DBHelper.kt per salvare l'audio nel db
+        //da rivedere dei campi della funzione, non ho tutte le informazioni
+        db.insertData(newFilename, dirPath, timestamp, duration, amspath)
     }
 
     //metodo per nascondere la bottomsheet

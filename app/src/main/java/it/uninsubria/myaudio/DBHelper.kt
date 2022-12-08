@@ -12,9 +12,9 @@ val DB_VERSION = 1
 val TABLE_NAME = "AudioRecords"
 val filename ="FileName"
 val filePath ="Path"
-var timestamp = "TimeStamp"
-var duration ="Duration"
-var amspath = "Amspath"
+var timestamp = "TimeStamp" //?
+var duration ="Duration" //?
+var amspath = "Amspath" //?
 
 class DBHelper (var context : Context) : SQLiteOpenHelper(context , DB_NAME , null , DB_VERSION) {
 

@@ -1,6 +1,7 @@
 package it.uninsubria.myaudio
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -16,6 +17,8 @@ import androidx.core.app.ActivityCompat
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.bottom_sheet.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -32,6 +35,9 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
     private var fileName = ""
     private var isRecording = false
     private var isPaused = false
+
+    private var duration = ""
+
     private lateinit var db : DBHelper
 
     private lateinit var timer: Timer
@@ -106,14 +112,20 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
 
     //metodo per salvare la registrazione, se l'utente cambia il nome del file viene salvato con il nuovo nome
     private fun save(){
-        val newFilename = filenameInput.text.toString()
-        if(newFilename != fileName){
-            var newFile = File("$dirPath$newFilename.mp3")
+        val newFileName = filenameInput.text.toString()
+        if(newFileName != fileName){
+            var newFile = File("$dirPath$newFileName.mp3")
             File("$dirPath$fileName.mp3").renameTo(newFile)
         }
-        //uso la funzione di DBHelper.kt per salvare l'audio nel db
-        //da rivedere dei campi della funzione, non ho tutte le informazioni
-        db.insertData(newFilename, dirPath, timestamp, duration, amspath)
+
+        //inserisco i file nel db
+        var filePath ="$dirPath$newFileName.mp3"
+        var timestamp = Date().time
+        var record = AudioRecord(newFileName, filePath, timestamp, duration)
+
+        GlobalScope.launch {
+            db.insertData(record.filename, record.filePath, record.timestamp, record.duration)
+        }
     }
 
     //metodo per nascondere la bottomsheet
@@ -145,6 +157,7 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
     }
 
 
+    @SuppressLint("NewApi")
     private fun pauseRecorder(){
         recorder.pause()
         isPaused = true
@@ -153,6 +166,7 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
         timer.pause()
     }
 
+    @SuppressLint("NewApi")
     private fun resumeRecorder(){
         recorder.pause()
         isPaused = false
@@ -225,5 +239,6 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
 
     override fun onTimerTick(duration: String) {
         tv_timer.text = duration
+        this.duration = duration.dropLast(3)
     }
 }

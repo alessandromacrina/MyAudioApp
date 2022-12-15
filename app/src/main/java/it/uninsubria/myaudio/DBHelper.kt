@@ -12,9 +12,8 @@ val DB_VERSION = 1
 val TABLE_NAME = "AudioRecords"
 val filename ="FileName"
 val filePath ="Path"
-var timestamp = "TimeStamp" //?
-var duration ="Duration" //?
-var amspath = "Amspath" //?
+var timestamp = "TimeStamp"
+var duration ="Duration"
 
 class DBHelper (var context : Context) : SQLiteOpenHelper(context , DB_NAME , null , DB_VERSION) {
 
@@ -24,7 +23,6 @@ class DBHelper (var context : Context) : SQLiteOpenHelper(context , DB_NAME , nu
                 filePath + " " + "VARCHAR(512)," +
                 timestamp + " " + "BIGINT," +
                 duration + " " + "VARCHAR(15)," +
-                amspath + " " + "VARCHAR(512)" +
                 ")"
         db?.execSQL(createTable)
     }
@@ -34,14 +32,13 @@ class DBHelper (var context : Context) : SQLiteOpenHelper(context , DB_NAME , nu
         onCreate(db)
     }
 
-    fun insertData(fn:String , fp:String , ts:Long, dur:String , aP:String): Boolean{
+    fun insertData(fn:String , fp:String , ts:Long, dur:String): Boolean{
         val db=this.writableDatabase
         var cv = ContentValues()
         cv.put(filename , fn)
         cv.put(filePath , fp)
         cv.put(timestamp , ts)
         cv.put(duration, dur)
-        cv.put(amspath , aP)
         var result = db.insert(TABLE_NAME , null , cv)
         if(result<0)
             return false
@@ -59,14 +56,12 @@ class DBHelper (var context : Context) : SQLiteOpenHelper(context , DB_NAME , nu
             val fn = cursor.getColumnIndex(filename)
             val ts = cursor.getColumnIndex(timestamp)
             val dur = cursor.getColumnIndex(duration)
-            val ap = cursor.getColumnIndex(amspath)
             if(cursor.moveToFirst()) {
                 do {
                     //problema con il cursore index -1
                     val audiorecord = AudioRecord(
                         cursor.getString(fp), cursor.getString(fn),
-                        cursor.getLong(ts), cursor.getString(dur), cursor.getString(ap)
-                    )
+                        cursor.getLong(ts), cursor.getString(dur))
                     list.add(audiorecord)
                 } while (cursor.moveToNext())
             }

@@ -7,6 +7,7 @@
     tools:context=".PlayerActivity">
 
     <SeekBar
+        android:id="@+id/seekBar_play"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:progress="40"

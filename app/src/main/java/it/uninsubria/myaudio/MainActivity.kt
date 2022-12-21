@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.MediaRecorder
 import android.os.*
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -125,6 +126,7 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
 
         GlobalScope.launch {
             db.insertData(record.filename, record.filePath, record.timestamp, record.duration)
+            Log.i("SEGNALAZIONE" , record.filePath)
         }
     }
 

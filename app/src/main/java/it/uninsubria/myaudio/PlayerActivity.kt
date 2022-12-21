@@ -10,27 +10,28 @@ import androidx.core.content.res.ResourcesCompat
 class PlayerActivity : AppCompatActivity() {
 
     private lateinit var mediaPlayer: MediaPlayer
-    private lateinit var btnPlay : ImageButton
-    private lateinit var seekBar : SeekBar
+    private lateinit var btnPlay: ImageButton
+    private lateinit var seekBar: SeekBar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.player_activity)
-
+        btnPlay = findViewById(R.id.btn_play)
         var filepath = intent.getStringExtra("filepath")
         var filename = intent.getStringExtra("filename")
 
         mediaPlayer = MediaPlayer()
         mediaPlayer.apply {
-            setDataSource("filepath")
+            setDataSource(filepath)
             prepare()
         }
-        btnPlay = findViewById(R.id.btn_play)
+
+        playPause()
+
+
         seekBar = findViewById(R.id.seekBar_play)
 
         btnPlay.setOnClickListener{
-
-
-
+            playPause()
         }
 
 

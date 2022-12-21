@@ -9,19 +9,24 @@
     <SeekBar
         android:id="@+id/seekBar_play"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:progress="40"
         android:progressTint="@color/blu_turchese"
         android:thumbTint="@color/blu_turchese"
-        tools:layout_editor_absoluteX="-28dp"
-        tools:layout_editor_absoluteY="-5dp" />
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.905"
+        tools:layout_editor_absoluteX="16dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="96dp"
 
+        android:layout_height="96dp"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="50dp">
+
+
 
         <ImageButton
             android:id="@+id/btn_play"

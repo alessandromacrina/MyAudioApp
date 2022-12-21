@@ -60,7 +60,7 @@ class DBHelper (var context : Context) : SQLiteOpenHelper(context , DB_NAME , nu
                 do {
                     //problema con il cursore index -1
                     val audiorecord = AudioRecord(
-                        cursor.getString(fp), cursor.getString(fn),
+                        cursor.getString(fn), cursor.getString(fp),
                         cursor.getLong(ts), cursor.getString(dur))
                     list.add(audiorecord)
                 } while (cursor.moveToNext())

@@ -7,7 +7,11 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.ImageButton
 import android.widget.SeekBar
+import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
+import kotlinx.android.synthetic.main.player_activity.*
+import java.text.DecimalFormat
+import java.text.NumberFormat
 
 class PlayerActivity : AppCompatActivity() {
 
@@ -18,6 +22,9 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var runnable: Runnable
     private lateinit var handler: Handler
     private var delay = 0L
+
+    private lateinit var tvTimeLeft: TextView
+    private lateinit var tvTimeRight: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,12 +37,13 @@ class PlayerActivity : AppCompatActivity() {
 
         mediaPlayer = MediaPlayer()
         seekBar = findViewById(R.id.seekBar_play)
+        tvTimeLeft= findViewById(R.id.tv_timeleft)
+        tvTimeRight=findViewById(R.id.tv_timeright)
         mediaPlayer.apply {
             setDataSource(filepath)
             prepare()
         }
-
-        //playPause()
+        tvTimeRight.text= durationFormat(mediaPlayer.duration)
 
         btnPlay.setOnClickListener{
             playPause()
@@ -44,6 +52,7 @@ class PlayerActivity : AppCompatActivity() {
         handler= Handler(Looper.getMainLooper())
         runnable = Runnable {
             seekBar.progress = mediaPlayer.currentPosition
+            tvTimeLeft.text = durationFormat(mediaPlayer.currentPosition)
             handler.postDelayed(runnable , delay)
         }
         playPause()
@@ -91,5 +100,21 @@ class PlayerActivity : AppCompatActivity() {
     private fun stop(){
         btnPlay.background = ResourcesCompat.getDrawable(resources , R.drawable.ic_round_play_circle_filled_24 , theme)
         handler.removeCallbacks(runnable) //rimuove il runnable dalla lista degli oggetti per il loop
+    }
+
+    private fun durationFormat(duration: Int) : String{
+        var dur = duration / 1000
+        var s= dur%60
+        var m = (dur/60)%60
+        var h = (((dur-m*60)/60)/60).toInt()
+
+        val format : NumberFormat = DecimalFormat("00")
+        var str = "$m : ${format.format(s)}"
+
+        if(h>0)
+        {
+            str= "$h : $m"
+        }
+        return str
     }
 }

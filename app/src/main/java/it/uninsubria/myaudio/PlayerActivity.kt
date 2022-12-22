@@ -70,17 +70,18 @@ class PlayerActivity : AppCompatActivity() {
 
         seekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
 
-
+            //se cambiamento avvenuto per via dell'utente p2->true e la seekbar prenderà il valore p1
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-                TODO("Not yet implemented")
+                if(p2)
+                    mediaPlayer.seekTo(p1)
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {
-                TODO("Not yet implemented")
+
             }
 
             override fun onStopTrackingTouch(p0: SeekBar?) {
-                TODO("Not yet implemented")
+
             }
 
 

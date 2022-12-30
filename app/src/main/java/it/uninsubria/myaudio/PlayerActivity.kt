@@ -22,7 +22,6 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var runnable: Runnable
     private lateinit var handler: Handler
     private var delay = 0L
-
     private lateinit var tvTimeLeft: TextView
     private lateinit var tvTimeRight: TextView
 

@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".PlayerActivity">
 
+    <ImageButton
+        android:id="@+id/btn_play"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="@drawable/ic_round_play_circle_filled_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    >
+
     <SeekBar
         android:id="@+id/seekBar_play"
         android:layout_width="match_parent"
@@ -13,8 +24,8 @@
         android:progress="40"
         android:progressTint="@color/blu_turchese"
         android:thumbTint="@color/blu_turchese"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="90dp"
         app:layout_constraintVertical_bias="0.905"
         />
 
@@ -36,29 +47,5 @@
         app:layout_constraintStart_toStartOf="@id/seekBar_play"
         app:layout_constraintTop_toBottomOf="@id/seekBar_play"
         />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="match_parent"
-
-        android:layout_height="96dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="50dp">
-
-
-
-        <ImageButton
-            android:id="@+id/btn_play"
-            android:layout_width="66dp"
-            android:layout_height="66dp"
-            android:background="@drawable/ic_round_play_circle_filled_24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteY="16dp" />
-        >
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -82,12 +82,13 @@ class ArchivioActivity : AppCompatActivity() , OnItemClickListenerInterface {
         }, 100)
     }
 
-
+    //metodo per gestire il click lungo su un elemento della list view
     override fun onItemLongClickListener(position: Int) {
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         bottomSheetArchivioBG.visibility = View.VISIBLE
         fileNameRename.setText(records[position].filename)
 
+        //elimino la registrazione selezionata
         btn_delete.setOnClickListener {
             db.deleteData(records[position].filePath)
             Toast.makeText(this, "Registrazione eliminata", Toast.LENGTH_SHORT).show()
@@ -95,6 +96,7 @@ class ArchivioActivity : AppCompatActivity() , OnItemClickListenerInterface {
             dismiss()
         }
 
+        //rinomino la registrazione
         btn_rename.setOnClickListener {
             if (fileNameRename.text.toString() != records[position].filename){
                 db.updateName(records[position].filename, fileNameRename.text.toString())
@@ -106,6 +108,7 @@ class ArchivioActivity : AppCompatActivity() , OnItemClickListenerInterface {
             dismiss()
         }
 
+        //condivido la registrazione
         btn_share.setOnClickListener {
             val path = FileProvider.getUriForFile(this, authorities, File(records[position].filePath))
 
@@ -115,6 +118,7 @@ class ArchivioActivity : AppCompatActivity() , OnItemClickListenerInterface {
             shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             shareIntent.type = "audio/mp3"
             startActivity(Intent.createChooser(shareIntent, "Condividi Registrazione"))
+            dismiss()
         }
     }
 

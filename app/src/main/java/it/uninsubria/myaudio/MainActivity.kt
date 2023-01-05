@@ -124,6 +124,7 @@ class MainActivity : AppCompatActivity(), Timer.OnTimerTickListener {
         var timestamp = Date().time
         var record = AudioRecord(newFileName, filePath, timestamp, duration)
 
+        //lo faccio fare in background per non rallentare l'app
         GlobalScope.launch {
             db.insertData(record.filename, record.filePath, record.timestamp, record.duration)
             Log.i("SEGNALAZIONE" , record.filePath)

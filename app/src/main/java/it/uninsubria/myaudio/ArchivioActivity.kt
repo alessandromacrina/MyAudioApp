@@ -3,6 +3,7 @@ package it.uninsubria.myaudio
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -12,6 +13,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_archivio.*
@@ -21,8 +23,10 @@ import kotlinx.android.synthetic.main.bottom_sheet_archivio.*
 import kotlinx.android.synthetic.main.bottom_sheet_archivio.btn_delete
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.io.File
 
 class ArchivioActivity : AppCompatActivity() , OnItemClickListenerInterface {
+    private val authorities ="com.restart.shareaudiofiles.fileprovider"
     private lateinit var records : ArrayList<AudioRecord>
     private lateinit var myAdapter : AudioRecyclerAdapter
     private lateinit var db : DBHelper
@@ -103,7 +107,14 @@ class ArchivioActivity : AppCompatActivity() , OnItemClickListenerInterface {
         }
 
         btn_share.setOnClickListener {
+            val path = FileProvider.getUriForFile(this, authorities, File(records[position].filePath))
 
+            val shareIntent = Intent()
+            shareIntent.action = Intent.ACTION_SEND
+            shareIntent.putExtra(Intent.EXTRA_STREAM, path)
+            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            shareIntent.type = "audio/mp3"
+            startActivity(Intent.createChooser(shareIntent, "Condividi Registrazione"))
         }
     }
 

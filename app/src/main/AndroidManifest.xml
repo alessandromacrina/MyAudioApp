@@ -35,6 +35,16 @@
         <activity
             android:name=".ArchivioActivity">
         </activity>
+
+        <provider
+            android:authorities="com.restart.shareaudiofiles.fileprovider"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+        <meta-data
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            android:resource="@xml/filepath"/>
+        </provider>
     </application>
 
 </manifest>

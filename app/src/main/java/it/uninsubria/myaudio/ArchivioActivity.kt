@@ -1,13 +1,24 @@
 package it.uninsubria.myaudio
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_archivio.*
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.bottom_sheet.*
+import kotlinx.android.synthetic.main.bottom_sheet_archivio.*
+import kotlinx.android.synthetic.main.bottom_sheet_archivio.btn_delete
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -15,11 +26,16 @@ class ArchivioActivity : AppCompatActivity() , OnItemClickListenerInterface {
     private lateinit var records : ArrayList<AudioRecord>
     private lateinit var myAdapter : AudioRecyclerAdapter
     private lateinit var db : DBHelper
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_archivio)
         db = DBHelper(this)
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetArchivio)
+        bottomSheetBehavior.peekHeight = 0
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+
         records = db.readData()
         if(records.size <= 0)
             Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show()
@@ -53,8 +69,42 @@ class ArchivioActivity : AppCompatActivity() , OnItemClickListenerInterface {
 
     }
 
+    //metodo per nascondere la bottomsheet
+    private fun dismiss(){
+        bottomSheetArchivioBG.visibility = View.GONE
+        //ritardo l'operazione perchè fatta subito dopo spesso viene saltata
+        Handler(Looper.getMainLooper()).postDelayed({
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        }, 100)
+    }
+
+
     override fun onItemLongClickListener(position: Int) {
-        Toast.makeText(this, "click prolungato", Toast.LENGTH_SHORT).show()
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        bottomSheetArchivioBG.visibility = View.VISIBLE
+        fileNameRename.setText(records[position].filename)
+
+        btn_delete.setOnClickListener {
+            db.deleteData(records[position].filePath)
+            Toast.makeText(this, "Registrazione eliminata", Toast.LENGTH_SHORT).show()
+            myAdapter.notifyDataSetChanged()
+            dismiss()
+        }
+
+        btn_rename.setOnClickListener {
+            if (fileNameRename.text.toString() != records[position].filename){
+                db.updateName(records[position].filename, fileNameRename.text.toString())
+                Toast.makeText(this, "Registrazione rinominata", Toast.LENGTH_SHORT).show()
+                myAdapter.notifyDataSetChanged()
+                dismiss()
+            }
+            Toast.makeText(this, "Nome file non modificato", Toast.LENGTH_SHORT).show()
+            dismiss()
+        }
+
+        btn_share.setOnClickListener {
+
+        }
     }
 
 }

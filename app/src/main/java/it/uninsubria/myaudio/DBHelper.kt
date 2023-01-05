@@ -71,7 +71,12 @@ class DBHelper (var context : Context) : SQLiteOpenHelper(context , DB_NAME , nu
 
     fun deleteData(path:String):Int{
         val db = this.readableDatabase
-        return db.delete(TABLE_NAME, filePath +" = "+ path , null)
+        return db.delete(TABLE_NAME, filePath + " = " + "'" + path + "'" , null)
+    }
+
+    fun updateName(oldName:String, newName:String){
+        val db = this.writableDatabase
+        db?.execSQL("UPDATE " + TABLE_NAME + " SET FileName = " + "'" + newName + "'" + " WHERE FileName = " + "'" +oldName + "'")
     }
 
 }

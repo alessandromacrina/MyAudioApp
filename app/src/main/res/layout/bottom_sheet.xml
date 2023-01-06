@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save Record?"
+        android:text="@string/str_save_record"
         android:textSize="26sp"
         android:layout_marginTop="20dp"
         android:textAlignment="center"/>
@@ -37,7 +37,7 @@
             android:id="@+id/btn_cancel"
             android:layout_width="140dp"
             android:layout_height="60dp"
-            android:text="cancel"
+            android:text="@string/str_cancel"
             android:backgroundTint="@color/grey"
             android:textColor="@color/greyDark"
             app:cornerRadius="26dp"
@@ -46,7 +46,7 @@
             android:id="@+id/btn_ok"
             android:layout_width="140dp"
             android:layout_height="60dp"
-            android:text="Ok"
+            android:text="@string/str_ok"
             android:layout_marginStart="20dp"
             android:backgroundTint="@color/strokeColor"
             android:textColor="@color/white"

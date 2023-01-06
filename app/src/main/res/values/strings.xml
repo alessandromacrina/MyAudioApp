@@ -1,4 +1,10 @@
 <resources>
-    <string name="app_name">MyAudio</string>
-    <string name="myaudio">MYAUDIO</string>
+    <string name="app_name" translatable="false">MyAudio</string>
+    <string name="myaudio" translatable="false">MYAUDIO</string>
+    <string name="str_ok">Ok</string>
+    <string name="str_cancel">Cancel</string>
+    <string name="str_save_record">Save Record?</string>
+    <string name="str_rename">Rename</string>
+    <string name="str_delete">Delete</string>
+    <string name="str_share">Share</string>
 </resources>

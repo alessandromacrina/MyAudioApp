@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="str_ok">Ok</string>
+    <string name="str_cancel">Annulla</string>
+    <string name="str_save_record">Salva Registrazione</string>
+    <string name="str_rename">Rinomina</string>
+    <string name="str_delete">Elimina</string>
+    <string name="str_share">Condividi</string>
+</resources>

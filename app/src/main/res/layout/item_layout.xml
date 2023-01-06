@@ -29,13 +29,13 @@
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:text="jajajaj"/>
+            android:text="nome registrazione"/>
         <TextView
             android:id="@+id/tv_tvItem2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="12sp"
-            android:text="o calippo te piace"/>
+            android:text="durata registrazione"/>
     </LinearLayout>
 
     <CheckBox

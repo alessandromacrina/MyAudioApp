@@ -27,30 +27,32 @@
         android:layout_marginBottom="80dp">
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_rename"
-            android:layout_width="140dp"
+            android:layout_width="120dp"
             android:layout_height="60dp"
-            android:text="Rinomina"
+            android:text="@string/str_rename"
             android:backgroundTint="@color/grey"
             android:textColor="@color/greyDark"
             app:cornerRadius="26dp"
             app:rippleColor="@color/greyDark"/>
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_delete"
-            android:layout_width="140dp"
+            android:layout_width="120dp"
             android:layout_height="60dp"
-            android:text="Cancella"
+            android:text="@string/str_delete"
             android:backgroundTint="@color/grey"
             android:textColor="@color/greyDark"
             app:cornerRadius="26dp"
+            android:layout_marginStart="20dp"
             app:rippleColor="@color/greyDark"/>
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_share"
-            android:layout_width="140dp"
+            android:layout_width="120dp"
             android:layout_height="60dp"
-            android:text="Condividi"
+            android:text="@string/str_share"
             android:backgroundTint="@color/grey"
             android:textColor="@color/greyDark"
             app:cornerRadius="26dp"
+            android:layout_marginStart="20dp"
             app:rippleColor="@color/greyDark"/>
 
     </LinearLayout>

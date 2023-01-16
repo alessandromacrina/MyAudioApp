@@ -91,6 +91,7 @@ class ArchivioActivity : AppCompatActivity() , OnItemClickListenerInterface {
         //elimino la registrazione selezionata
         btn_delete.setOnClickListener {
             db.deleteData(records[position].filePath)
+            records.remove(records[position])
             Toast.makeText(this, "Registrazione eliminata", Toast.LENGTH_SHORT).show()
             myAdapter.notifyDataSetChanged()
             dismiss()

@@ -66,11 +66,8 @@ class ArchivioActivity : AppCompatActivity() , OnItemClickListenerInterface {
         var audioRecord = records[position]
         var intent = Intent(this , PlayerActivity::class.java )
         intent.putExtra("filepath" , audioRecord.filePath)
-        Log.i("SEGNALAZIONE_FPATH" , audioRecord.filePath)
         intent.putExtra("filename" , audioRecord.filename)
-        Log.i("SEGNALAZIONE_FNAME" , audioRecord.filename)
         startActivity(intent)
-
     }
 
     //metodo per nascondere la bottomsheet
@@ -101,12 +98,15 @@ class ArchivioActivity : AppCompatActivity() , OnItemClickListenerInterface {
         btn_rename.setOnClickListener {
             if (fileNameRename.text.toString() != records[position].filename){
                 db.updateName(records[position].filename, fileNameRename.text.toString())
+                records.set(position, records[position])
                 Toast.makeText(this, "Registrazione rinominata", Toast.LENGTH_SHORT).show()
                 myAdapter.notifyDataSetChanged()
                 dismiss()
             }
-            Toast.makeText(this, "Nome file non modificato", Toast.LENGTH_SHORT).show()
-            dismiss()
+            else{
+                Toast.makeText(this, "Nome file non modificato", Toast.LENGTH_SHORT).show()
+                dismiss()
+            }
         }
 
         //condivido la registrazione

@@ -22,7 +22,7 @@ class DBHelper (var context : Context) : SQLiteOpenHelper(context , DB_NAME , nu
                         filename + " " + "VARCHAR(128)," +
                 filePath + " " + "VARCHAR(512)," +
                 timestamp + " " + "BIGINT," +
-                duration + " " + "VARCHAR(15)," +
+                duration + " " + "VARCHAR(15)" +
                 ")"
         db?.execSQL(createTable)
     }
